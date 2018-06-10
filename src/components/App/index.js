@@ -10,10 +10,10 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
-		this.requestChartData();
+		this.fetchChartData();
 	}
 
-	async requestChartData() {
+	async fetchChartData() {
 		const { playerName } = this.state;
 		const latestMatch = await fetchLatestMatch(playerName);
 		const teamKdr = getTeamKdr(latestMatch, playerName);
