@@ -18,7 +18,7 @@ export default class API {
     async makeRequest(uri) {
         return await this.request.get(uri)
             .then((reponse) => reponse.data.data)
-            .catch((error) => console.log(error));
+            .catch((error) => console.error(error));
     }
 
     getPlayer(playerName) {
@@ -28,5 +28,10 @@ export default class API {
 
     getMatch(matchId) {
         return this.makeRequest(`matches/${matchId}`);
+    }
+
+    async getMatchLatestMatch(playerName) {
+        const { relationships } = await this.getPlayer(playerName);
+        return this.getMatch(relationships.matches.data[0].id);
     }
 }

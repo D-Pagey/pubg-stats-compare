@@ -6,22 +6,17 @@ export default class App extends Component {
 	state = {}
 	api = new API()
 	
-	componentDidMount() {
-		this.api.getPlayer('r4g3d').then((data) => {
-			this.api.getMatch(data.relationships.matches.data[0].id)
-				.then((data) => console.log(data));
-				
-			this.setState({ apiData: data });
-		});
+	async componentDidMount() {
+		this.setState({ data: await this.api.getMatchLatestMatch('r4g3d') });
 	}
 
 	render() {
-		const { apiData } = this.state;
+		const { data } = this.state;
 
 		return (
 			<div>
 				<h1>PUBG Stats Compare</h1>
-				<pre>{JSON.stringify(apiData, null, 4)}</pre>
+				<pre>{JSON.stringify(data, null, 4)}</pre>
 			</div>
 		);
 	}
