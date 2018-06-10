@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "d3": "5.4.0",
+    "prop-types": "15.6.1",
     "pubg.js": "3.5.3",
     "react": "16.4.0",
     "react-dom": "16.4.0",

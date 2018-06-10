@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
@@ -6,68 +7,68 @@ import { axisBottom } from 'd3-axis';
 import './index.css';
 
 export default class Chart extends Component {
+    static propTypes = {
+        data: PropTypes.array.isRequired,
+        size: PropTypes.array.isRequired
+    }
 
-    node = React.createRef();
+    node = React.createRef()
 
     componentDidMount() {
-      this.createChart()
+        this.createChart();
     }
 
     componentDidUpdate() {
-      this.createChart()
+        this.createChart();
     }
 
     createChart = () => {
-
+        const { data, size } = this.props;
+        const node = this.node.current;
         const xScale = scaleLinear()
-        .domain([0, max(this.props.data)])
-        .range([0, this.props.size[0] - 50])
-
+            .domain([0, max(data)])
+            .range([0, size[0] - 50]);
         const xAxis = axisBottom(xScale);
-
-
-
-        select(this.node)
+        
+        select(node)
             .selectAll('rect')
-            .data(this.props.data)
+            .data(data)
             .enter()
-            .append('rect')
-         
-        select(this.node)
+            .append('rect');
+
+        select(node)
             .selectAll('rect')
-            .data(this.props.data)
+            .data(data)
             .exit()
-            .remove()
-         
-        select(this.node)
+            .remove();
+
+        select(node)
             .selectAll('rect')
-            .data(this.props.data)
+            .data(data)
             .attr('x', 0)    
             .attr('y', (d, i) => i * 60)
-            .attr('width', d => xScale(d))
+            .attr('width', xScale)
             .attr('height', 50)
-            .style('fill', 'green')
+            .style('fill', 'green');
 
-        select(this.node)
+        select(node)
             .selectAll('text')
-            .data(this.props.data)
+            .data(data)
             .enter()
             .append('text')
-            .text((d) => d + ' k/d')
-            .attr('x', (d, i) => xScale(d) + 5)
-            .attr('y', (d, i) => i * 60 + 30)
+            .text((d) => `${d} k/d`)
+            .attr('x', (d) => xScale(d) + 5)
+            .attr('y', (d, i) => i * 60 + 30);
 
-        select(this.node)
+        select(node)
             .append('g')
-            .attr('transform', 'translate(0, ' + 200 + ')')
-            .call(xAxis)
-   }
-    
-   render() {
-      return <svg ref={node => this.node = node} className='svg'
-      width={550} height={250}>
-      </svg>
-   }
+            .attr('transform', `translate(0, ${200})`)
+            .call(xAxis);
+    }
+
+    render() {
+        return <svg ref={this.node} className='svg' width={550} height={250} />
+    }
 }
 
 
