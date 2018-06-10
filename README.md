@@ -1,3 +1,3 @@
 ## PUBG Stats Compare
 
-`API_TOKEN=<apiToken> yarn start`
+`REACT_APP_API_TOKEN=<apiToken> yarn start`
