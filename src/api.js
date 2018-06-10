@@ -5,6 +5,8 @@ const API_URL = 'https://api.playbattlegrounds.com/shards/';
 
 export default class API {
     constructor(apiPlatform = 'pc-eu') {
+        if (!API_TOKEN) throw new Error('No `REACT_APP_API_TOKEN` supplied.');
+        
         this.request = axios.create({
             baseURL: `${API_URL}${apiPlatform}`,
             headers: {
