@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from './api';
 import './App.css';
+import Chart from './components/Chart';
 
 export default class App extends Component {
 	state = {}
@@ -17,6 +18,10 @@ export default class App extends Component {
 			<div>
 				<h1>PUBG Stats Compare</h1>
 				<pre>{JSON.stringify(data, null, 4)}</pre>
+				<Chart 
+				data={[0.90, 1.1, 1.5]} 
+				size={[500, 500]}
+				padding={30} />
 			</div>
 		);
 	}
