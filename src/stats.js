@@ -5,11 +5,10 @@ export default class Stats {
         this.match = match;
     }
 
-    getTeamByPlayerName = (playerName) => {
-        return this.match.relationships.rosters.find((roster) =>
+    getTeamByPlayerName = (playerName) =>
+        this.match.relationships.rosters.find((roster) =>
             roster.relationships.participants.find((participant) =>
                 participant.attributes.stats.name === playerName));
-    }
 
     getTeamStats = (playerName) =>
         this.getTeamByPlayerName(playerName).relationships.participants.map((participant) =>
