@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { fetchLatestMatch } from '../../api';
-import { getTeamKdr } from '../../selectors';
+import Api from '../../api';
+import Stats from '../../stats';
 import Chart from '../Chart';
 
 export default class App extends Component {
@@ -9,14 +9,17 @@ export default class App extends Component {
 		chartData: null,
 	}
 
+	api = new Api()
+
 	componentDidMount() {
 		this.fetchChartData();
 	}
 
 	async fetchChartData() {
 		const { playerName } = this.state;
-		const latestMatch = await fetchLatestMatch(playerName);
-		const teamKdr = getTeamKdr(latestMatch, playerName);
+		const match = await this.api.fetchLatestMatch(playerName);
+		const matchStats = new Stats(match);
+		const teamKdr = matchStats.getTeamKdr(playerName);
 
 		this.setState({ chartData: teamKdr });
 	}

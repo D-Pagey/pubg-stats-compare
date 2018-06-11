@@ -1,11 +1,14 @@
 import pubg from 'pubg.js';
 
 const API_TOKEN = process.env.REACT_APP_API_TOKEN;
-const API_PLATFORM = 'pc-eu';
 
-const client = new pubg.Client(API_TOKEN, API_PLATFORM);
+export default class Api {
+    constructor(platform = 'pc-eu') {
+        this.client = new pubg.Client(API_TOKEN, platform);
+    }
 
-export const fetchLatestMatch = async (playerName) => {
-    const player = await client.getPlayer({ name: playerName });
-    return await client.getMatch(player.relationships.matches[0].id);
-};
+    async fetchLatestMatch(playerName) {
+        const player = await this.client.getPlayer({ name: playerName });
+        return await this.client.getMatch(player.relationships.matches[0].id);
+    };
+}
