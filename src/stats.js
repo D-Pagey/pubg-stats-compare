@@ -19,4 +19,14 @@ export default class Stats {
             name,
             kdr: deathType !== 'alive' ? kills / 1 : kills
         }));
+
+    getTeamDamagePercent = (playerName) => { 
+        const teamStats = this.getTeamStats(playerName);
+        const totalTeamDamage = teamStats.reduce((acc, { damageDealt }) => acc + damageDealt, 0);
+
+        return teamStats.map(({ name, damageDealt }) => ({
+            name,
+            damagePercent: (damageDealt / totalTeamDamage) * 100
+        }))
+    }
 }

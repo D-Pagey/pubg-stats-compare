@@ -18,10 +18,9 @@ export default class App extends Component {
 	async fetchChartData() {
 		const { playerName } = this.state;
 		const match = await this.api.fetchLatestMatch(playerName);
-		const matchStats = new Stats(match);
-		const teamKdr = matchStats.getTeamKdr(playerName);
+		const teamDamagePercent = new Stats(match).getTeamDamagePercent(playerName);
 
-		this.setState({ chartData: teamKdr });
+		this.setState({ chartData: teamDamagePercent });
 	}
 
 	render() {
